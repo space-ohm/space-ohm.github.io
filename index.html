@@ -208,6 +208,9 @@
 		right: 4rem;
 	}
 
+
+	.page { display: none; }
+    .active { display: block; }
     /* Footer */
     footer {
       background: var(--primary);
@@ -232,8 +235,9 @@
     <div class="nav-container">
       <div class="logo"><img src="assets/spaceohm.svg" /></div>
       <ul class="nav-links">
-        <li><a href="#about">Über uns</a></li>
-        <li><a href="#about-cubesats">Cubesats</a></li>
+        <li><a href="#about" onclick="show('hauptseite')">Über uns</a></li>
+        <li><a href="#about-cubesats" onclick="show('hauptseite')">Cubesats</a></li>
+		<li><a href="#impressum" onclick="show('impressum')">Impressum</a></li>
         <!-- <li><a href="#features">Features</a></li> -->
         <!-- <li><a href="#team">Wir suchen dich!</a></li> -->
         <li><a href="https://github.com/space-ohm/space-ohm.github.io" target="_blank">GitHub</a></li>
@@ -241,13 +245,15 @@
     </div>
   </nav>
 
-  <section class="hero">
+ 
+ <section class="hero">
     <div class="hero-content">
       <h1>SpaceOHM</h1>
       <p class="subtitle">CubeSat-Satelliten an der Ohm</p>
-      <a href="#about" class="cta-button">Über das Projekt</a>
+      <a href="#about" class="cta-button" onclick="show('hauptseite')">Über das Projekt</a>
     </div>
   </section>
+<div id="hauptseite" class="page active">
 
   <main>
     <section id="about">
@@ -299,7 +305,38 @@
     <!--   </div> -->
     <!-- </section> -->
   </main>
+</div>
+<div id="impressum" class="page" style="margin-left: 20px">
+	<h2>Impressum:</h2
+	<p>
+        Darius Herrman<br>
+        Musterstraße 123<br>
+        12345 Musterstadt<br>
+        Deutschland
+    </p>
 
+    <h3>Kontakt</h3>
+    <p>
+        Telefon: <a href="tel:+491234567890">+49 123 4567890</a><br>
+        E-Mail: <a href="mailto:info@beispiel.de">info@beispiel.de</a><br>
+        Web: <a href="https://www.beispiel.de" target="_blank">www.beispiel.de</a>
+    </p>
+	<h3>Haftungsausschluss</h3>
+    <p>
+        <strong>Haftung für Inhalte</strong><br>
+        Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, 
+        Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+    </p>
+    <p>
+        <strong>Haftung für Links</strong><br>
+        Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. 
+        Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen.
+    </p>
+    <p>
+        <strong>Urheberrecht</strong><br>
+        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.
+    </p>
+</div>
   <footer>
     <p>SpaceOHM – Darius Herrmann – 2025</p>
     <p>E-Mail: herrmannda105530@th-nuernberg.de, Tel.: +49 176 82480837</p>
@@ -320,6 +357,8 @@
         });
       });
     });
+	
+	
 	const counterStudent = document.getElementById('counterStudent');
 	const endStudent = 7;
 	let currentStudent = 0;
@@ -329,11 +368,9 @@
 		counterStudent.textContent = currentStudent.toLocaleString('de-DE');
 		if (currentStudent >= endStudent) {
 			counterStudent.textContent = endStudent.toLocaleString('de-DE');
-			clearInterval(timer);
+			clearInterval(timerStudent);
 		}
 	}, 150);
-	
-	
 	
 	const counterProf = document.getElementById('counterProf');
 	const endProf = 2;
@@ -343,10 +380,22 @@
 		currentProf += Math.ceil((endProf - currentProf) / 10); // schnelle Annäherung
 		counterProf.textContent = currentProf.toLocaleString('de-DE');
 		if (currentProf >= endProf) {
-			counterProf.textContent = endProft.toLocaleString('de-DE');
-			clearInterval(timer);
+			counterProf.textContent = endProf.toLocaleString('de-DE');
+			clearInterval(timerProf);
 		}
 	}, 150);
+	
+	function show(id) {
+		document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+		document.getElementById(id).classList.add('active');
+    
+    // Optional: URL ohne Neuladen ändern
+		history.pushState(null, null, '#' + id);
+	}
+	window.addEventListener('load', () => {
+		const hash = location.hash.slice(1) || 'hauptseite';
+		show(hash);
+	});
   </script>
 
 </body>
